@@ -2,7 +2,10 @@
 const imageRateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const IMAGE_RATE_LIMIT = 20; // requests per window
 const IMAGE_RATE_WINDOW = 60 * 1000; // 1 minute
-export const maxDuration = 120; 
+
+exports.config = {
+  maxDuration: 120,
+};
 
 function checkImageRateLimit(ip: string): boolean {
   const now = Date.now();

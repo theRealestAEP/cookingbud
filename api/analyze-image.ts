@@ -1,5 +1,10 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+// Note: Hobby plan max is 10s, Pro plan can go up to 300s
+exports.config = {
+  maxDuration: 120,
+};
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 // Simple in-memory rate limiting (resets on function cold start)
