@@ -108,7 +108,7 @@ module.exports = async function handler(req: any, res: any) {
     1. Only suggest recipes that can be made with the visible ingredients
     2. Consider the user's dietary preferences and calorie/macro requirements if specified
     3. Provide realistic prep times
-    4. Include nutritional estimates if the user mentioned calorie or macro preferences
+    4. Include nutritional estimates like calories and macro nutrients
     
     Return ONLY the JSON object, no additional text.`;
 
