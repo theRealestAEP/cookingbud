@@ -6,6 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT = 10; // requests per window
 const RATE_WINDOW = 60 * 1000; // 1 minute
+export const maxDuration = 120; 
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
