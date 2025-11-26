@@ -17,17 +17,19 @@
 
 1. **Add your API keys**:
    
-   Create a `.env` file in the project root with both keys:
+   **For Local Development**, create a `.env` file:
    ```bash
-   echo "VITE_GEMINI_API_KEY=your_gemini_key_here" > .env
-   echo "VITE_UNSPLASH_ACCESS_KEY=your_unsplash_key_here" >> .env
+   echo "GEMINI_API_KEY=your_gemini_key_here" > .env
+   echo "UNSPLASH_ACCESS_KEY=your_unsplash_key_here" >> .env
    ```
    
    Or manually create the file with:
    ```env
-   VITE_GEMINI_API_KEY=your_gemini_key_here
-   VITE_UNSPLASH_ACCESS_KEY=your_unsplash_key_here
+   GEMINI_API_KEY=your_gemini_key_here
+   UNSPLASH_ACCESS_KEY=your_unsplash_key_here
    ```
+   
+   **IMPORTANT:** No `VITE_` prefix! This keeps your keys secure on the backend.
 
 2. **Start the development server**:
    ```bash
@@ -68,12 +70,28 @@
 - **Be Specific**: The more detailed your preferences, the better the suggestions
 - **Mix & Match**: You can upload different photos to get various recipe ideas
 
+## Deploying to Vercel
+
+1. Push your code to GitHub
+2. Go to [Vercel](https://vercel.com) and import your repository
+3. **Add Environment Variables** in Vercel dashboard:
+   - `GEMINI_API_KEY` (no VITE_ prefix!)
+   - `UNSPLASH_ACCESS_KEY` (no VITE_ prefix!)
+4. Deploy!
+
+**Security Note:** Your API keys are now secure! They're never exposed to the frontend. See [SECURITY.md](SECURITY.md) for details.
+
 ## Troubleshooting
 
 ### "Failed to generate recipes" Error
-- **Check API Key**: Verify your `.env` file has the correct `VITE_GEMINI_API_KEY`
+- **Check API Keys**: Verify environment variables are set correctly (no `VITE_` prefix)
+- **Rate Limiting**: App has built-in rate limits (10 requests/minute) - wait and retry
 - **Internet Connection**: Verify you have a stable internet connection
-- **Rate Limits**: Free tier has limits. Wait a minute and try again
+
+### 429 "Too Many Requests" Error
+- The app limits requests to prevent abuse
+- Wait 1 minute and try again
+- This is normal security behavior
 
 ### Image Won't Upload
 - Make sure the file is a valid image format (JPG, PNG, etc.)

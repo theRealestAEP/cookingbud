@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_GEMINI_API_KEY: string
-  readonly VITE_UNSPLASH_ACCESS_KEY: string
+  // No frontend environment variables needed anymore
+  // API keys are now securely stored on the backend
 }
 
 interface ImportMeta {

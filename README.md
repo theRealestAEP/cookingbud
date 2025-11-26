@@ -35,11 +35,18 @@ Your AI-powered recipe assistant that uses Google's Gemini multimodal AI to anal
    ```
 
 2. **Set up your environment variables**:
-   Create a `.env` file in the root directory:
+   
+   **For Local Development**, create a `.env` file:
    ```env
-   VITE_GEMINI_API_KEY=your_gemini_api_key_here
-   VITE_UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
+   UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
    ```
+   
+   **For Vercel Deployment**, add these in your Vercel dashboard:
+   - Go to Settings → Environment Variables
+   - Add `GEMINI_API_KEY` (without VITE_ prefix!)
+   - Add `UNSPLASH_ACCESS_KEY` (without VITE_ prefix!)
+   - Set scope to: Production, Preview, and Development
 
 3. **Run the development server**:
    ```bash
@@ -101,16 +108,30 @@ npm run preview
 
 ## Environment Variables
 
-- `VITE_GEMINI_API_KEY`: Your Google Gemini API key (required)
-- `VITE_UNSPLASH_ACCESS_KEY`: Your Unsplash Access Key (required for recipe images)
+**Backend Environment Variables** (Server-side only, secure):
+- `GEMINI_API_KEY`: Your Google Gemini API key (required)
+- `UNSPLASH_ACCESS_KEY`: Your Unsplash Access Key (required for recipe images)
+
+**Note:** These variables are NOT prefixed with `VITE_` - they stay on the server and are never exposed to the frontend.
+
+## Security
+
+This app implements secure API key handling with serverless functions. See [SECURITY.md](SECURITY.md) for details.
+
+**Key Features:**
+- ✅ API keys never exposed to frontend
+- ✅ Rate limiting to prevent abuse
+- ✅ Input validation and sanitization
+- ✅ Secure serverless architecture
 
 ## Troubleshooting
 
 ### Common Issues
 
-- **API Key Invalid**: Make sure your `.env` file has the correct `VITE_GEMINI_API_KEY`
-- **Rate Limits**: Free tier has rate limits. Wait a moment and try again
-- **Large Images**: Try compressing images if uploads fail
+- **API Key Invalid**: Check environment variables in Vercel (no `VITE_` prefix!)
+- **Rate Limits**: Built-in rate limiting - wait a moment if you hit the limit
+- **Large Images**: Images limited to ~5MB for security
+- **429 Errors**: Too many requests - wait 1 minute and try again
 
 ## Contributing
 
