@@ -1,20 +1,18 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+// Simple in-memory rate limiting for image search
+const imageRateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const IMAGE_RATE_LIMIT = 20; // requests per window
+const IMAGE_RATE_WINDOW = 60 * 1000; // 1 minute
 
-// Simple in-memory rate limiting
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 20; // requests per window
-const RATE_WINDOW = 60 * 1000; // 1 minute
-
-function checkRateLimit(ip: string): boolean {
+function checkImageRateLimit(ip: string): boolean {
   const now = Date.now();
-  const userLimit = rateLimitMap.get(ip);
+  const userLimit = imageRateLimitMap.get(ip);
 
   if (!userLimit || now > userLimit.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
+    imageRateLimitMap.set(ip, { count: 1, resetTime: now + IMAGE_RATE_WINDOW });
     return true;
   }
 
-  if (userLimit.count >= RATE_LIMIT) {
+  if (userLimit.count >= IMAGE_RATE_LIMIT) {
     return false;
   }
 
@@ -22,7 +20,7 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req: any, res: any) {
   // Only allow POST requests
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -32,7 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const userIP = (req.headers["x-forwarded-for"] as string) || "unknown";
   
   // Check rate limit
-  if (!checkRateLimit(userIP)) {
+  if (!checkImageRateLimit(userIP)) {
     return res.status(429).json({ 
       error: "Too many requests. Please wait a moment and try again." 
     });
@@ -70,10 +68,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       throw new Error(`Unsplash API error: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: any = await response.json();
 
     if (data.results && data.results.length > 0) {
-      const photo = data.results[0];
+      const photo: any = data.results[0];
       return res.status(200).json({
         id: photo.id,
         url: photo.urls.regular,
@@ -89,5 +87,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Return null instead of error to gracefully degrade
     return res.status(200).json(null);
   }
-}
-
+};

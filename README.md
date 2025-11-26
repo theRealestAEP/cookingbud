@@ -29,12 +29,17 @@ Your AI-powered recipe assistant that uses Google's Gemini multimodal AI to anal
 
 ### Installation
 
-1. **Clone and install dependencies**:
+1. **Install Vercel CLI** (required for local development):
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Clone and install dependencies**:
    ```bash
    npm install
    ```
 
-2. **Set up your environment variables**:
+3. **Set up your environment variables**:
    
    **For Local Development**, create a `.env` file:
    ```env
@@ -48,12 +53,18 @@ Your AI-powered recipe assistant that uses Google's Gemini multimodal AI to anal
    - Add `UNSPLASH_ACCESS_KEY` (without VITE_ prefix!)
    - Set scope to: Production, Preview, and Development
 
-3. **Run the development server**:
+4. **Run the development server**:
    ```bash
-   npm run dev
+   vercel dev
+   # This simulates the full production environment (Vite + API routes)
+   ```
+   
+   Or if you just want to work on the frontend without API calls:
+   ```bash
+   npm run dev  # Just Vite (API calls will fail)
    ```
 
-4. **Open your browser**:
+5. **Open your browser**:
    Navigate to `http://localhost:5173`
 
 ## Usage
@@ -114,9 +125,6 @@ npm run preview
 
 **Note:** These variables are NOT prefixed with `VITE_` - they stay on the server and are never exposed to the frontend.
 
-## Security
-
-This app implements secure API key handling with serverless functions. See [SECURITY.md](SECURITY.md) for details.
 
 **Key Features:**
 - ✅ API keys never exposed to frontend

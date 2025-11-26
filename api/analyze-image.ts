@@ -1,5 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
@@ -25,7 +24,7 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req: any, res: any) {
   // Only allow POST requests
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -128,5 +127,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error: "Failed to analyze image. Please try again." 
     });
   }
-}
-
+};

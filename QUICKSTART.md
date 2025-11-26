@@ -15,6 +15,11 @@
 
 ## Setup
 
+0. **Install Vercel CLI** (required for local development):
+   ```bash
+   npm install -g vercel
+   ```
+
 1. **Add your API keys**:
    
    **For Local Development**, create a `.env` file:
@@ -33,8 +38,13 @@
 
 2. **Start the development server**:
    ```bash
-   npm run dev
+   vercel dev
+   # This starts Vite AND the API routes
    ```
+   
+   **Note:** The first time you run this, Vercel CLI may ask you to link the project. You can skip this for local development by pressing 'N'.
+   
+   Vercel will automatically detect your Vite setup and run it along with the API routes.
 
 3. **Open your browser**:
    
