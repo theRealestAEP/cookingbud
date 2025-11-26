@@ -118,7 +118,15 @@ Feel free to submit issues and enhancement requests!
 
 ## License
 
-MIT
+This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+**This means:**
+- ✅ You can use, modify, and share this code
+- ✅ You must give appropriate credit
+- ✅ Any modifications must use the same license
+- ❌ **You cannot use this software for commercial purposes**
+
+For full license details, see the [LICENSE](LICENSE) file or visit [Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Acknowledgments
 
