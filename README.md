@@ -1,23 +1,7 @@
 # Kitchen Buddy 🍳
 
-Your AI-powered recipe assistant that uses Google's Gemini multimodal AI to analyze photos of your fridge and suggest personalized recipes based on available ingredients and your dietary preferences.
+AI-powered recipe assistant that uses Google's Gemini multimodal AI to analyze photos of your fridge and suggest personalized recipes based on available ingredients and your dietary preferences. 
 
-## Features
-
-- 📸 **Image Upload/Capture**: Take a photo or upload an image of your fridge or pantry
-- 🤖 **AI-Powered Analysis**: Gemini AI identifies visible ingredients automatically
-- ✨ **Natural Language Preferences**: Specify calorie goals, macro requirements, or dietary restrictions in plain English
-- 🍽️ **Personalized Recipes**: Get recipe suggestions tailored to your available ingredients and preferences
-- 🎨 **Modern UI**: Clean, responsive interface built with shadcn/ui and Tailwind CSS
-
-## Tech Stack
-
-- **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **UI Components**: shadcn/ui
-- **Styling**: Tailwind CSS
-- **AI Model**: Google Gemini 1.5 Flash (multimodal)
-- **Icons**: Lucide React
 
 ## Getting Started
 
@@ -119,41 +103,23 @@ npm run preview
 
 ## Environment Variables
 
-**Backend Environment Variables** (Server-side only, secure):
+**Backend Environment Variables** (Server-side):
 - `GEMINI_API_KEY`: Your Google Gemini API key (required)
 - `UNSPLASH_ACCESS_KEY`: Your Unsplash Access Key (required for recipe images)
 
-**Note:** These variables are NOT prefixed with `VITE_` - they stay on the server and are never exposed to the frontend.
 
-
-**Key Features:**
-- ✅ API keys never exposed to frontend
-- ✅ Rate limiting to prevent abuse
-- ✅ Input validation and sanitization
-- ✅ Secure serverless architecture
 
 ## Troubleshooting
 
 ### Common Issues
 
-- **API Key Invalid**: Check environment variables in Vercel (no `VITE_` prefix!)
 - **Rate Limits**: Built-in rate limiting - wait a moment if you hit the limit
 - **Large Images**: Images limited to ~5MB for security
 - **429 Errors**: Too many requests - wait 1 minute and try again
 
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-
 ## License
 
 This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
-
-**This means:**
-- ✅ You can use, modify, and share this code
-- ✅ You must give appropriate credit
-- ✅ Any modifications must use the same license
-- ❌ **You cannot use this software for commercial purposes**
 
 For full license details, see the [LICENSE](LICENSE) file or visit [Creative Commons](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
