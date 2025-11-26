@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .chef-hat-main { fill: #ffffff; stroke: #2d3748; stroke-width: 2; }
+      .chef-hat-accent { fill: #48bb78; }
+    </style>
+  </defs>
+  <!-- Chef Hat -->
+  <g>
+    <!-- Hat top (puffy part) -->
+    <ellipse cx="30" cy="35" rx="12" ry="15" class="chef-hat-main"/>
+    <ellipse cx="50" cy="25" rx="15" ry="20" class="chef-hat-main"/>
+    <ellipse cx="70" cy="35" rx="12" ry="15" class="chef-hat-main"/>
+    
+    <!-- Hat middle fill -->
+    <rect x="20" y="35" width="60" height="25" class="chef-hat-main"/>
+    
+    <!-- Hat band -->
+    <rect x="15" y="55" width="70" height="15" class="chef-hat-main"/>
+    
+    <!-- Accent stripe -->
+    <rect x="15" y="60" width="70" height="3" class="chef-hat-accent"/>
+  </g>
+</svg>
