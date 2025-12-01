@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Clock, Flame, Apple } from "lucide-react";
 import { Recipe } from "@/lib/gemini";
-import { searchFoodImage, UnsplashImage } from "@/lib/unsplash";
+import { searchFoodImage, triggerDownload, UnsplashImage } from "@/lib/unsplash";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -12,16 +12,28 @@ interface RecipeCardProps {
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const [image, setImage] = useState<UnsplashImage | null>(null);
   const [imageLoading, setImageLoading] = useState(true);
+  const [downloadTriggered, setDownloadTriggered] = useState(false);
 
   useEffect(() => {
     async function fetchImage() {
       setImageLoading(true);
+      setDownloadTriggered(false);
       const result = await searchFoodImage(recipe.name);
       setImage(result);
       setImageLoading(false);
     }
     fetchImage();
   }, [recipe.name]);
+
+  // Trigger download when image is displayed (per Unsplash API guidelines)
+  // This counts as "using" the image since it's displayed as part of recipe results
+  useEffect(() => {
+    if (image && image.downloadLocation && !downloadTriggered) {
+      triggerDownload(image.downloadLocation);
+      setDownloadTriggered(true);
+    }
+  }, [image, downloadTriggered]);
+
   return (
     <Card className="hover:shadow-lg transition-shadow overflow-hidden">
       {/* Recipe Image */}
@@ -34,14 +46,28 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             alt={recipe.name}
             className="w-full h-full object-cover"
           />
-          <a
-            href={`${image.photographerUrl}?utm_source=KitchenBuddy&utm_medium=referral`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded hover:bg-black/80 transition-colors"
-          >
-            📷 {image.photographer}
-          </a>
+          {/* Proper Unsplash attribution format: "Photo by [Name] on Unsplash" */}
+          {/* Links use UTM parameters as per Unsplash guidelines */}
+          <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
+            Photo by{" "}
+            <a
+              href={image.photographerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-200"
+            >
+              {image.photographer}
+            </a>
+            {" "}on{" "}
+            <a
+              href={image.unsplashUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-200"
+            >
+              Unsplash
+            </a>
+          </div>
         </div>
       ) : (
         <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
@@ -121,4 +147,3 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     </Card>
   );
 }
-

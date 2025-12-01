@@ -3,6 +3,9 @@ const imageRateLimitMap = new Map<string, { count: number; resetTime: number }>(
 const IMAGE_RATE_LIMIT = 20; // requests per window
 const IMAGE_RATE_WINDOW = 60 * 1000; // 1 minute
 
+// App name for Unsplash attribution (use snake_case)
+const APP_NAME = "kitchen_buddy";
+
 exports.config = {
   maxDuration: 120,
 };
@@ -76,11 +79,21 @@ module.exports = async function handler(req: any, res: any) {
 
     if (data.results && data.results.length > 0) {
       const photo: any = data.results[0];
+      
+      // Build proper UTM referral links as per Unsplash guidelines
+      // https://help.unsplash.com/en/articles/2511315-guideline-attribution
+      const utmParams = `utm_source=${APP_NAME}&utm_medium=referral`;
+      const photographerUrlWithUtm = `${photo.user.links.html}?${utmParams}`;
+      const unsplashUrlWithUtm = `https://unsplash.com/?${utmParams}`;
+      
       return res.status(200).json({
         id: photo.id,
         url: photo.urls.regular,
         photographer: photo.user.name,
-        photographerUrl: photo.user.links.html,
+        photographerUrl: photographerUrlWithUtm,
+        unsplashUrl: unsplashUrlWithUtm,
+        // Include download_location for triggering downloads per Unsplash API guidelines
+        downloadLocation: photo.links.download_location,
       });
     }
 

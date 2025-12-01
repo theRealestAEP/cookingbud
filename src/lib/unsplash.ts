@@ -3,6 +3,8 @@ export interface UnsplashImage {
   url: string;
   photographer: string;
   photographerUrl: string;
+  unsplashUrl: string;
+  downloadLocation: string;
 }
 
 export async function searchFoodImage(query: string): Promise<UnsplashImage | null> {
@@ -29,3 +31,19 @@ export async function searchFoodImage(query: string): Promise<UnsplashImage | nu
   }
 }
 
+// Trigger a download event per Unsplash API guidelines
+// This should be called when an image is "used" (displayed to user as their chosen recipe)
+export async function triggerDownload(downloadLocation: string): Promise<void> {
+  try {
+    await fetch("/api/trigger-download", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ downloadLocation }),
+    });
+  } catch (error) {
+    // Silently fail - don't break the user experience
+    console.error("Error triggering download:", error);
+  }
+}
